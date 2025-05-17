@@ -6,7 +6,10 @@ from django.conf import settings
 
 
 class TypeEnterprise(models.Model):
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=100 )
+
+    def __str__(self):
+        return self.nom
 
 
 MOVEMENT_CHOICES = [
@@ -22,7 +25,7 @@ class Enterprise(models.Model):
     User = models.ForeignKey(EnterpriseUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.nom}-{self.type_enterprise.name}"
+        return f"{self.nom}-{self.type_enterprise.nom}"
 
     def __repr__(self):
         return Enterprise(self.nom, self.address, self.type_enterprise)
