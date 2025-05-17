@@ -1,0 +1,1 @@
+Ce projet consist a realiser une application django pour la gestion de l'inventaire d'une entreprise ou un magain
