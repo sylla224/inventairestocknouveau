@@ -4,28 +4,21 @@ from .managers import CustomUserManager
 
 
 # Create your models here.
-class EnterpriseUser(AbstractUser):
+class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(max_length=240, unique=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
-    groups = models.ManyToManyField(
-        Group,
-        related_name="enterpriseuser_set",  # <-- avoid conflict
-        blank=True,
-        verbose_name=("groups"),
-        help_text=("The groups this user belongs to."),
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name="enterpriseuser_set",  # <-- avoid conflict
-        blank=True,
-        verbose_name=("user permissions"),
-        help_text=("Specific permissions for this user."),
-    )
     objects = CustomUserManager()
 
 
+"""
+Pourquoi ne pas utiliser le modèle de base de Django pour les rôles et permissions ?
+Sinon c'est valide quand même
+"""
 class Role(models.Model):
-    name = models.CharField("Role utilisateur", max_length=100)
-    user = models.ForeignKey(EnterpriseUser, on_delete=models.CASCADE)
+    name = models.CharField("Role utilisateur", max_length=100, unique=True)
+    description = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
