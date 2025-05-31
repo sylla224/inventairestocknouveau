@@ -1,0 +1,53 @@
+{% load static tailwind_tags %}
+{% load django_browser_reload %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="{% static 'img/fav.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.12.1/css/pro.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/dist/styles.css' %}">
+    {% tailwind_css %}
+	{% block title %}Bienvenue sur le site de Gestion de Stock{% endblock %}
+
+</head>
+<body class="bg-gray-100 bg-gray-50 font-serif leading-normal tracking-normal">
+<!--<div class="container mx-auto">-->
+<!--    <section class="flex items-center justify-center h-screen">-->
+<!--        <h1 class="text-5xl">Django + Tailwind = ❤️</h1>-->
+<!--    </section>-->
+<!--</div>-->
+{% load static %}
+
+{% block navbar %}
+
+    {% include 'base/navbar.html' %}
+{% endblock %}
+<div class="h-screen flex flex-row flex-wrap">
+{% block content %}
+
+{% endblock %}
+
+
+
+{% block sidebar %}
+    {% include 'base/sidebar.html' %}
+
+{% endblock %}
+
+
+{% block footer %}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+
+
+{% django_browser_reload_script %}
+
+
+</body>
+</html>
