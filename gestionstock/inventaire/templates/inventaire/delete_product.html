@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block title %}Create Product - Inventory Management{% endblock %}
+
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">Gestion des Produits</h1>
+
+            <!-- Product List -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-800">Liste des Produits</h2>
+                </div>
+
+                <!-- Sample Product (Replace with Django template loop) -->
+                <div class="divide-y divide-gray-200">
+                    <!-- Product Item -->
+                    <div class="px-6 py-4 hover:bg-gray-50 transition-colors duration-200">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-medium text-gray-900">{{ product.nom }}</h3>
+                                        <p class="text-sm text-gray-500">SKU: {{ product.sku }}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-lg font-semibold text-gray-900">{{ product.prix }}€</p>
+                                        <p class="text-sm text-gray-500">Stock: {{ product.stock }}</p>
+                                    </div>
+                                </div>
+                                <p class="mt-2 text-gray-600">{{ product.description }}</p>
+                                <div class="mt-2 flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>Seuil d'alerte: {{ product.seuil_alert }}</span>
+                                </div>
+                            </div>
+                            <div class="ml-6">
+                                <button
+                                    onclick="openDeleteModal('{{ product.id }}', '{{ product.nom }}', '{{ product.sku }}')"
+                                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                >
+                                    <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add more product items here with Django template loop -->
+                    <!-- {% for product in products %} -->
+                    <!-- ... repeat the above structure ... -->
+                    <!-- {% endfor %} -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-gray-900">Confirmer la suppression</h3>
+                    <button onclick="closeDeleteModal()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="mb-6">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <svg class="w-12 h-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-700">
+                                Êtes-vous sûr de vouloir supprimer ce produit ?
+                            </p>
+                            <div class="mt-2 text-sm text-gray-500">
+                                <p><strong>Nom:</strong> <span id="modalProductName"></span></p>
+                                <p><strong>SKU:</strong> <span id="modalProductSku"></span></p>
+                            </div>
+                            <p class="mt-2 text-sm text-red-600 font-medium">
+                                Cette action est irréversible.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex items-center justify-end space-x-3">
+                    <button
+                        onclick="closeDeleteModal()"
+                        class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    >
+                        Annuler
+                    </button>
+                    <form id="deleteForm" method="post"  class="inline">
+                        {% csrf_token %}
+                        <button
+                            type="submit"
+                            class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                        >
+                            Supprimer définitivement
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        function openDeleteModal(productId, productName, productSku) {
+            // Set the product information in the modal
+            document.getElementById('modalProductName').textContent = productName;
+            document.getElementById('modalProductSku').textContent = productSku;
+
+            // Set the form action URL (adjust the URL pattern according to your Django URLs)
+            document.getElementById('deleteForm').action = `/products/delete/${productId}/confirm`;
+
+            // Show the modal
+            document.getElementById('deleteModal').classList.remove('hidden');
+
+            // Prevent body scrolling when modal is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            // Hide the modal
+            document.getElementById('deleteModal').classList.add('hidden');
+
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside of it
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDeleteModal();
+            }
+        });
+    </script>
+{% endblock %}

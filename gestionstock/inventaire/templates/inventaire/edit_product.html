@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% block title %}Products - Inventory Management{% endblock %}
+
+{% block content %}
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Modifier le Produit</h1>
+            <p class="mt-2 text-gray-600">Modifiez les informations du produit ci-dessous</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <form method="post" class="p-6 space-y-6">
+                {% csrf_token %}
+
+                <!-- SKU Field -->
+                <div>
+                    <label for="{{ form.sku.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        SKU <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        name="{{ form.sku.name }}"
+                        id="{{ form.sku.id_for_label }}"
+                        value="{{ form.sku.value|default:'' }}"
+                        maxlength="100"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                        placeholder="Entrez le SKU du produit"
+                        required
+                    >
+                    {% if form.sku.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.sku.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Nom Field -->
+                <div>
+                    <label for="{{ form.nom.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nom du Produit <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        name="{{ form.nom.name }}"
+                        id="{{ form.nom.id_for_label }}"
+                        value="{{ form.nom.value|default:'' }}"
+                        maxlength="100"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                        placeholder="Entrez le nom du produit"
+                        required
+                    >
+                    {% if form.nom.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.nom.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Description Field -->
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Description <span class="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        name="{{ form.description.name }}"
+                        id="{{ form.description.id_for_label }}"
+                        rows="4"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-vertical"
+                        placeholder="Entrez la description du produit"
+                        required
+                    >{{ form.description.value|default:'' }}</textarea>
+                    {% if form.description.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.description.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Prix and Stock Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Prix Field -->
+                    <div>
+                        <label for="{{ form.prix.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Prix (€)
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">€</span>
+                            </div>
+                            <input
+                                type="number"
+                                name="{{ form.prix.name }}"
+                                id="{{ form.prix.id_for_label }}"
+                                value="{{ form.prix.value|default:'0' }}"
+                                min="0"
+                                class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                                placeholder="0"
+                            >
+                        </div>
+                        {% if form.prix.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.prix.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Stock Field -->
+                    <div>
+                        <label for="{{ form.stock.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                            Stock
+                        </label>
+                        <input
+                            type="number"
+                            name="{{ form.stock.name }}"
+                            id="{{ form.stock.id_for_label }}"
+                            value="{{ form.stock.value|default:'0' }}"
+                            min="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                            placeholder="0"
+                        >
+                        {% if form.stock.errors %}
+                            <div class="mt-1 text-sm text-red-600">
+                                {% for error in form.stock.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Seuil Alert Field -->
+                <div>
+                    <label for="{{ form.seuil_alert.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Seuil d'Alerte
+                    </label>
+                    <input
+                        type="number"
+                        name="{{ form.seuil_alert.name }}"
+                        id="{{ form.seuil_alert.id_for_label }}"
+                        value="{{ form.seuil_alert.value|default:'0' }}"
+                        min="0"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                        placeholder="0"
+                    >
+                    <p class="mt-1 text-sm text-gray-500">Niveau de stock minimum avant alerte</p>
+                    {% if form.seuil_alert.errors %}
+                        <div class="mt-1 text-sm text-red-600">
+                            {% for error in form.seuil_alert.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
+                    <button
+                        type="submit"
+                        class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium"
+                    >
+                        Enregistrer les Modifications
+                    </button>
+                    <a
+                        href="{% url 'inventaire:products' %}"
+                        class="flex-1 bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200 font-medium text-center"
+                    >
+                        Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Additional Info Card -->
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-blue-800">Information</h3>
+                    <div class="mt-2 text-sm text-blue-700">
+                        <p>Les champs marqués d'un astérisque (*) sont obligatoires. Le seuil d'alerte vous permettra de recevoir des notifications lorsque le stock devient faible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
