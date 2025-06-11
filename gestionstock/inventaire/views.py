@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from  django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 
-from inventaire.forms import ProductForm
-from inventaire.models import Product
+from inventaire.forms import ProductForm, EntrepriseForm, TypeEnterpriseForm
+from inventaire.models import Product, Enterprise, TypeEnterprise
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 
 # Create your views here.
@@ -55,5 +56,58 @@ class DeleteProductview(DeleteView):
         context = super().get_context_data(**kwargs)
         context['product'] = self.object
         return context
+##View pour les entreprises (entrepôts)
+class ListeEntrepotView(ListView):
+    model = Enterprise
+    success_url = reverse_lazy('inventaire:liste_entreprise')
+    template_name = 'inventaire/entreprise/listes.html'
+    pagination_by = 20
+    context_object_name = 'enterprises'
+
+class CreateEnterpriseView(CreateView):
+    model = Enterprise
+    form_class = EntrepriseForm
+    success_url = reverse_lazy('inventaire:liste_entreprise')
+    template_name = 'inventaire/entreprise/add.html'
+
+
+class TypeEnterpriseListView(ListView):
+    model = TypeEnterprise
+    template_name = 'inventaire/typeenterprise/listes.html'
+    context_object_name = 'typeenterprises'
+    paginate_by = 10
+
+
+def typeenterprise_create(request):
+    if request.method == 'POST':
+        form = TypeEnterpriseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Type Enterprise created successfully!')
+            return redirect('inventaire:typeenterprise_list')
+    else:
+        form = TypeEnterpriseForm()
+
+    return render(request, 'inventaire/typeenterprise/create.html', {'form': form})
+
+
+def typeenterprise_list_create(request):
+    """Combined view for listing and creating"""
+    typeenterprises = TypeEnterprise.objects.all().order_by('-id')
+
+    if request.method == 'POST':
+        form = TypeEnterpriseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Type Enterprise created successfully!')
+            return redirect('typeenterprise_list_create')
+    else:
+        form = TypeEnterpriseForm()
+
+    context = {
+        'typeenterprises': typeenterprises,
+        'form': form
+    }
+    return render(request, 'typeenterprise/list_create.html', context)
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Product, Enterprise, TypeEnterprise
 
 
 class ProductForm(forms.ModelForm):
@@ -37,4 +37,34 @@ class ProductForm(forms.ModelForm):
                 'placeholder': 'Stock',
                 'style': 'border: 2px solid #4caf50; padding: 10px;'
             }),
+        }
+class EntrepriseForm(forms.ModelForm):
+    class Meta:
+        model = Enterprise
+        fields = '__all__'
+        widgets = {
+            'nom': forms.TextInput(attrs={
+                'class': 'form-input block w-full px-3 py-2 border',
+                'placeholder': 'Nom Entreprise',
+                'style': 'border: 2px solid #4caf50; padding: 10px; <span class="text-red-500">*</span>',
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'Adresse de l\'entreprise',
+                'style': 'border: 2px solid #4caf50; padding: 10px;'
+            }),
+        }
+class TypeEnterpriseForm(forms.ModelForm):
+    class Meta:
+        model = TypeEnterprise
+        fields = ['nom']
+        widgets = {
+            'nom': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter enterprise type name',
+                'required': True
+            })
+        }
+        labels = {
+            'nom': 'Enterprise Type Name'
         }

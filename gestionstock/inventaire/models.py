@@ -22,7 +22,7 @@ MOVEMENT_CHOICES = [
 
 
 class Enterprise(models.Model):
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=100, blank=False)
     address = models.CharField(max_length=100)
     type_enterprise = models.ForeignKey(TypeEnterprise, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE) # Donc une entreprise appartient à un utilisateur ok

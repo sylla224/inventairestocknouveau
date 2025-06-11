@@ -9,7 +9,7 @@
             <!-- Product List -->
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                    <h2 class="text-xl font-semibold text-gray-800">Liste des Produits</h2>
+                    <h2 class="text-xl font-semibold text-gray-800">Details du Produit</h2>
                 </div>
 
                 <!-- Sample Product (Replace with Django template loop) -->
@@ -101,7 +101,7 @@
                     >
                         Annuler
                     </button>
-                    <form id="deleteForm" method="post"  class="inline">
+                    <form id="deleteForm" method="post"  action="" class="inline">
                         {% csrf_token %}
                         <button
                             type="submit"
@@ -123,7 +123,7 @@
             document.getElementById('modalProductSku').textContent = productSku;
 
             // Set the form action URL (adjust the URL pattern according to your Django URLs)
-            document.getElementById('deleteForm').action = `/products/delete/${productId}/confirm`;
+            document.getElementById('deleteForm').action = "{% url 'inventaire:confirm_delete_product' pk=0 %}".replace('0', productId);
 
             // Show the modal
             document.getElementById('deleteModal').classList.remove('hidden');
