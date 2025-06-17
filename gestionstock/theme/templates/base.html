@@ -2,247 +2,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Inventory Management{% endblock %}</title>
     {% tailwind_css %}
+    {% endblock %}
 </head>
+
 <body class="bg-gray-50 flex h-screen overflow-hidden">
-    <!-- Sidebar -->
-    <aside class="bg-white w-64 border-r border-gray-200 hidden md:flex flex-col">
-        <!-- Sidebar Header -->
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h1 class="text-xl font-semibold text-gray-800">Inventory System</h1>
-        </div>
+<!-- Sidebar -->
+<aside class="bg-white w-64 border-r border-gray-200 hidden md:flex flex-col">
+    <!-- Sidebar Header -->
+    <div class="px-6 py-4 border-b border-gray-200">
+        <h1 class="text-xl font-semibold text-gray-800">Inventory System</h1>
+    </div>
 
-        <!-- Sidebar Navigation -->
-        <nav class="flex-1 overflow-y-auto py-4">
-            <ul class="space-y-1 px-3">
-                <li>
-                    <a href="{% url 'inventaire:dashboard' %}" class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if request.path == '/dashboard/' %}bg-gray-100 font-medium{% endif %}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+    <!-- Sidebar Navigation -->
+    <nav class="flex-1 overflow-y-auto py-4">
+        <ul class="space-y-1 px-3">
+            <li>
+                <a href="{% url 'inventaire:dashboard' %}"
+                   class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if request.path == '/dashboard/' %}bg-gray-100 font-medium{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
+                         viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'inventaire:products' %}"
+                   class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'products' in request.path %}bg-gray-100 font-medium{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
+                         viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                    Products
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'inventaire:categories' %}"
+                   class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'categories' in request.path %}bg-gray-100 font-medium{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
+                         viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                    </svg>
+                    Categories
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'account:listes_users' %}"
+                   class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'categories' in request.path %}bg-gray-100 font-medium{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
+                         viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/>
+                    </svg>
+                    Utilisateurs
+                </a>
+            </li>
+            <li class="relative">
+                <!-- Main Entreprises item with dropdown indicator -->
+                <a href="javascript:void(0)" onclick="toggleDropdown('entreprise-dropdown')"
+                   class="flex items-center justify-between px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'entreprise' in request.path %}bg-gray-100 font-medium{% endif %}">
+                    <div class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11a1 1 0 11-2 0V9a1 1 0 012 0v4zm-1-6a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
                         </svg>
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'inventaire:products' %}" class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'products' in request.path %}bg-gray-100 font-medium{% endif %}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
-                        </svg>
-                        Products
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'inventaire:categories' %}" class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'categories' in request.path %}bg-gray-100 font-medium{% endif %}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
-                        </svg>
-                        Categories
-                    </a>
-                </li>
-                <li class="relative">
-    <!-- Main Entreprises item with dropdown indicator -->
-    <a href="javascript:void(0)" onclick="toggleDropdown('entreprise-dropdown')" class="flex items-center justify-between px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'entreprise' in request.path %}bg-gray-100 font-medium{% endif %}">
-        <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11a1 1 0 11-2 0V9a1 1 0 012 0v4zm-1-6a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" />
-            </svg>
-            Entreprises
-        </div>
-        <!-- Dropdown chevron icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="entreprise-dropdown-icon">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-    </a>
+                        Entreprises
+                    </div>
+                    <!-- Dropdown chevron icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-4 w-4 text-gray-500 transition-transform duration-200" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor" id="entreprise-dropdown-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </a>
 
-    <!-- Dropdown sub-menu -->
-    <ul class="hidden absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10" id="entreprise-dropdown">
-        <!-- List all enterprises link -->
-        <li>
-            <a href="{% url 'inventaire:liste_entreprise' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {% if 'liste_entreprise' in request.path %}bg-gray-100 font-medium{% endif %}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-                Liste des entreprises
-            </a>
-        </li>
-
-        <!-- Add new enterprise link -->
-        <li>
-            <a href="{% url 'inventaire:create_entreprise' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {% if 'ajouter_entreprise' in request.path %}bg-gray-100 font-medium{% endif %}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Ajouter une entreprise
-            </a>
-        </li>
-        <!-- Add entreprise categories link -->
-        <li>
-            <a href="{% url 'inventaire:typeenterprise_list' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {% if 'entreprise_categories' in request.path %}bg-gray-100 font-medium{% endif %}">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Catégories d'entreprises
-            </a>
-
-    </ul>
-</li>
-
-            </ul>
-        </nav>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col overflow-hidden">
-        <!-- Top Navigation -->
-        <header class="bg-white border-b border-gray-200">
-            <div class="px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between h-16">
-                    <!-- Mobile menu button -->
-                    <div class="flex items-center md:hidden">
-                        <button type="button" class="mobile-menu-button text-gray-500 hover:text-gray-700 focus:outline-none" aria-label="Open sidebar">
-                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <!-- Dropdown sub-menu -->
+                <ul class="hidden absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+                    id="entreprise-dropdown">
+                    <!-- List all enterprises link -->
+                    <li>
+                        <a href="{% url 'inventaire:liste_entreprise' %}"
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {% if 'liste_entreprise' in request.path %}bg-gray-100 font-medium{% endif %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                             </svg>
-                        </button>
-                    </div>
+                            Liste des entreprises
+                        </a>
+                    </li>
 
-                    <!-- Search -->
-                    <div class="flex-1 px-4 flex justify-center lg:justify-end">
-                        <div class="max-w-lg w-full lg:max-w-xs">
-                            <label for="search" class="sr-only">Search</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <input id="search" name="search" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm" placeholder="Search" type="search">
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Add new enterprise link -->
+                    <li>
+                        <a href="{% url 'inventaire:create_entreprise' %}"
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {% if 'ajouter_entreprise' in request.path %}bg-gray-100 font-medium{% endif %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            Ajouter une entreprise
+                        </a>
+                    </li>
+                    <!-- Add entreprise categories link -->
+                    <li>
+                        <a href="{% url 'inventaire:typeenterprise_list' %}"
+                           class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 {% if 'entreprise_categories' in request.path %}bg-gray-100 font-medium{% endif %}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-gray-500" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                            Catégories d'entreprises
+                        </a>
 
-                    <!-- User menu -->
-                    <div class="ml-4 flex items-center md:ml-6">
-                        <!-- User dropdown -->
-                        <div class="ml-3 relative">
-                            <div class="flex items-center">
-                                <span class="hidden md:inline-block mr-2 text-sm font-medium text-gray-700">{{ request.user.username }}</span>
-                                <button type="button" class="user-menu-button max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                    <span class="sr-only">Open user menu</span>
-                                    <img class="h-8 w-8 rounded-full" src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=random" alt="{{ request.user.username }}">
-                                </button>
-                            </div>
+                </ul>
+            </li>
 
-                            <!-- User dropdown menu -->
-                            <div class="user-menu hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+        </ul>
+    </nav>
+</aside>
 
-        <!-- Mobile sidebar -->
-        <div class="mobile-sidebar fixed inset-0 flex z-40 md:hidden transform -translate-x-full transition-transform ease-in-out duration-300">
-            <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
-            <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
-                <div class="absolute top-0 right-0 -mr-12 pt-2">
-                    <button type="button" class="close-sidebar-button ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                        <span class="sr-only">Close sidebar</span>
-                        <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+<!-- Main Content -->
+<div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Top Navigation -->
+    <header class="bg-white border-b border-gray-200">
+        <div class="px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Mobile menu button -->
+                <div class="flex items-center md:hidden">
+                    <button type="button"
+                            class="mobile-menu-button text-gray-500 hover:text-gray-700 focus:outline-none"
+                            aria-label="Open sidebar">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
                 </div>
 
-                <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                    <div class="flex-shrink-0 flex items-center px-4">
-                        <h1 class="text-xl font-semibold text-gray-800">Inventory System</h1>
-                    </div>
-                    <nav class="mt-5 px-2 space-y-1">
-                        <!-- Same navigation items as desktop sidebar -->
-                        <a href="{% url 'inventaire:dashboard' %}" class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if request.path == '/dashboard/' %}bg-gray-100 font-medium{% endif %}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                            </svg>
-                            Dashboard
-                        </a>
-                        <!-- Repeat other navigation items -->
-                    </nav>
-                </div>
-                <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-                    <a href="#" class="flex-shrink-0 group block">
-                        <div class="flex items-center">
-                            <div>
-                                <img class="inline-block h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=random" alt="{{ request.user.username }}">
+                <!-- Search -->
+                <div class="flex-1 px-4 flex justify-center lg:justify-end">
+                    <div class="max-w-lg w-full lg:max-w-xs">
+                        <label for="search" class="sr-only">Search</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                          clip-rule="evenodd"/>
+                                </svg>
                             </div>
-                            <div class="ml-3">
-                                <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">{{ request.user.username }}</p>
-                                <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
-                            </div>
+                            <input id="search" name="search"
+                                   class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm"
+                                   placeholder="Search" type="search">
                         </div>
-                    </a>
+                    </div>
+                </div>
+
+                <!-- User menu -->
+                <div class="ml-4 flex items-center md:ml-6">
+                    <!-- User dropdown -->
+                    <div class="ml-3 relative">
+                        <div class="flex items-center">
+                            <span class="hidden md:inline-block mr-2 text-sm font-medium text-gray-700">{{ request.user.email }}</span>
+                            <button type="button"
+                                    class="user-menu-button max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <img class="h-8 w-8 rounded-full"
+                                     src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=random"
+                                     alt="{{ request.user.username }}">
+                            </button>
+                        </div>
+
+                        <!-- User dropdown menu -->
+                        <div class="user-menu hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your
+                                Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign
+                                out</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="flex-shrink-0 w-14"></div>
         </div>
+    </header>
 
-        <!-- Main content area -->
-        <main class="flex-1 overflow-y-auto bg-gray-50 p-4 sm:p-6 lg:p-8">
-            {% block content %}{% endblock %}
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-white border-t border-gray-200 py-4">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p class="text-center text-sm text-gray-500">
-                    &copy; {% now "Y" %} Inventory Management System. All rights reserved.
-                </p>
+    <!-- Mobile sidebar -->
+    <div class="mobile-sidebar fixed inset-0 flex z-40 md:hidden transform -translate-x-full transition-transform ease-in-out duration-300">
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+        <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+            <div class="absolute top-0 right-0 -mr-12 pt-2">
+                <button type="button"
+                        class="close-sidebar-button ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <span class="sr-only">Close sidebar</span>
+                    <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
-        </footer>
+
+            <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                <div class="flex-shrink-0 flex items-center px-4">
+                    <h1 class="text-xl font-semibold text-gray-800">Inventory System</h1>
+                </div>
+                <nav class="mt-5 px-2 space-y-1">
+                    <!-- Same navigation items as desktop sidebar -->
+                    <a href="{% url 'inventaire:dashboard' %}"
+                       class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if request.path == '/dashboard/' %}bg-gray-100 font-medium{% endif %}">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <!-- Repeat other navigation items -->
+                </nav>
+            </div>
+            <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
+                <a href="#" class="flex-shrink-0 group block">
+                    <div class="flex items-center">
+                        <div>
+                            <img class="inline-block h-10 w-10 rounded-full"
+                                 src="https://ui-avatars.com/api/?name={{ request.user.username }}&background=random"
+                                 alt="{{ request.user.username }}">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">{{
+                                request.user.username }}</p>
+                            <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">View profile</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-14"></div>
     </div>
+
+    <!-- Main content area -->
+    <main class="flex-1 overflow-y-auto bg-gray-50 p-4 sm:p-6 lg:p-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-gray-500">
+                &copy; {% now "Y" %} Inventory Management System. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</div>
 {% block js %}
-    <script>
-        // Toggle mobile menu
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const mobileSidebar = document.querySelector('.mobile-sidebar');
-            const closeSidebarButton = document.querySelector('.close-sidebar-button');
+<script>
+    // Toggle mobile menu
+    document.addEventListener('DOMContentLoaded', function () {
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileSidebar = document.querySelector('.mobile-sidebar');
+        const closeSidebarButton = document.querySelector('.close-sidebar-button');
 
-            if (mobileMenuButton && mobileSidebar && closeSidebarButton) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileSidebar.classList.remove('-translate-x-full');
-                });
+        if (mobileMenuButton && mobileSidebar && closeSidebarButton) {
+            mobileMenuButton.addEventListener('click', function () {
+                mobileSidebar.classList.remove('-translate-x-full');
+            });
 
-                closeSidebarButton.addEventListener('click', function() {
-                    mobileSidebar.classList.add('-translate-x-full');
-                });
-            }
+            closeSidebarButton.addEventListener('click', function () {
+                mobileSidebar.classList.add('-translate-x-full');
+            });
+        }
 
-            // Toggle user dropdown
-            const userMenuButton = document.querySelector('.user-menu-button');
-            const userMenu = document.querySelector('.user-menu');
+        // Toggle user dropdown
+        const userMenuButton = document.querySelector('.user-menu-button');
+        const userMenu = document.querySelector('.user-menu');
 
-            if (userMenuButton && userMenu) {
-                userMenuButton.addEventListener('click', function() {
-                    userMenu.classList.toggle('hidden');
-                });
+        if (userMenuButton && userMenu) {
+            userMenuButton.addEventListener('click', function () {
+                userMenu.classList.toggle('hidden');
+            });
 
-                // Close the dropdown when clicking outside
-                document.addEventListener('click', function(event) {
-                    if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
-                        userMenu.classList.add('hidden');
-                    }
-                });
-            }
-        });
-        function toggleDropdown(dropdownId) {
+            // Close the dropdown when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+            });
+        }
+    });
+
+    function toggleDropdown(dropdownId) {
         const dropdown = document.getElementById(dropdownId);
         const icon = document.getElementById(dropdownId + '-icon');
 
@@ -274,7 +335,7 @@
             }
         });
     }
-    </script>
+</script>
 {% endblock %}
 </body>
 </html>

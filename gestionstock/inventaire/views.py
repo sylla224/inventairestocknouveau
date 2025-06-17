@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from  django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView, DetailView
 
 from inventaire.forms import ProductForm, EntrepriseForm, TypeEnterpriseForm
 from inventaire.models import Product, Enterprise, TypeEnterprise
@@ -13,11 +13,14 @@ def index(request):
     Render the index page of the inventory application.
     """
     return render(request, 'inventaire/index.html')
+
+
 def CreateProduct(request):
     """
     Render the create product page.
     """
     return render(request, 'inventaire/create_product.html')
+
 
 class CreateProductView(CreateView):
     model = Product
@@ -25,6 +28,7 @@ class CreateProductView(CreateView):
     success_url = reverse_lazy('inventaire:products')
     template_name = 'inventaire/create_product.html'
     pagination_by = 20
+
 
 class ListProductView(ListView):
     model = Product
@@ -34,11 +38,13 @@ class ListProductView(ListView):
     def get_queryset(self):
         return Product.objects.all()
 
+
 class EditProductview(UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'inventaire/edit_product.html'
     success_url = reverse_lazy('inventaire:products')
+
 
 def DeleteProduct(request, pk):
     """
@@ -46,6 +52,7 @@ def DeleteProduct(request, pk):
     """
     product = Product.objects.get(pk=pk)
     return render(request, 'inventaire/delete_product.html', {'product': product})
+
 
 class DeleteProductview(DeleteView):
     model = Product
@@ -56,6 +63,8 @@ class DeleteProductview(DeleteView):
         context = super().get_context_data(**kwargs)
         context['product'] = self.object
         return context
+
+
 ##View pour les entreprises (entrepôts)
 class ListeEntrepotView(ListView):
     model = Enterprise
@@ -64,11 +73,26 @@ class ListeEntrepotView(ListView):
     pagination_by = 20
     context_object_name = 'enterprises'
 
+
 class CreateEnterpriseView(CreateView):
     model = Enterprise
     form_class = EntrepriseForm
     success_url = reverse_lazy('inventaire:liste_entreprise')
     template_name = 'inventaire/entreprise/add.html'
+
+
+class EditEnterpriseView(UpdateView):
+    model = Enterprise
+    form_class = EntrepriseForm
+    template_name = 'inventaire/entreprise/edit.html'
+    success_url = reverse_lazy('inventaire:liste_entreprise')
+
+
+class EnterpriseDetailView(DeleteView):
+    model = Enterprise
+    template_name = 'inventaire/entreprise/detail.html'
+    fields = '__all__'
+    context_object_name = 'enterprise'
 
 
 class TypeEnterpriseListView(ListView):
@@ -109,5 +133,3 @@ def typeenterprise_list_create(request):
         'form': form
     }
     return render(request, 'typeenterprise/list_create.html', context)
-
-

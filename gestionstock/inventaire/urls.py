@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import (index, CreateProductView, ListProductView, EditProductview, DeleteProductview, DeleteProduct,
                     ListeEntrepotView, CreateEnterpriseView, TypeEnterpriseListView, typeenterprise_create,
-                    typeenterprise_list_create)
+                    typeenterprise_list_create, EditEnterpriseView, EnterpriseDetailView)
 
 app_name = "inventaire"
 
@@ -21,5 +21,7 @@ urlpatterns = [
     path('typeenterprise/', TypeEnterpriseListView.as_view(), name='typeenterprise_list'),
     path('typeenterprise/create/', typeenterprise_create, name='typeenterprise_create'),
     path('typeenterprise/manage/', typeenterprise_list_create, name='typeenterprise_list_create'),
+    path('entreprise/<int:pk>/edit/', EditEnterpriseView.as_view(), name='edit_entreprise'),
+    path('entreprise/<int:pk>/detail/', EnterpriseDetailView.as_view(), name='entreprise_detail'),
 
 ]
