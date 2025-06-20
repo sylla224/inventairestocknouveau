@@ -161,7 +161,15 @@ class CustomLoginView(LoginView):
     """Custom login view using email authentication"""
     form_class = EmailAuthenticationForm
     template_name = 'account/login.html'
-    success_url = reverse_lazy('inventaire:dashboard')
+    
+    def get_success_url(self):
+        """Redirect based on user role after login"""
+        if self.request.user.groups.filter(name='administrator').exists():
+            return reverse_lazy('account:admin_dashboard')
+        elif self.request.user.groups.filter(name='gestionnaire').exists():
+            return reverse_lazy('account:gestionnaire_dashboard')
+        else:
+            return reverse_lazy('account:dashboard')
     
     def form_valid(self, form):
         messages.success(self.request, f'Welcome back, {form.get_user().email}!')
