@@ -5,6 +5,8 @@ from inventaire.forms import ProductForm, EntrepriseForm, TypeEnterpriseForm
 from inventaire.models import Product, Enterprise, TypeEnterprise
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # Create your views here.
@@ -133,3 +135,4 @@ def typeenterprise_list_create(request):
         'form': form
     }
     return render(request, 'typeenterprise/list_create.html', context)
+

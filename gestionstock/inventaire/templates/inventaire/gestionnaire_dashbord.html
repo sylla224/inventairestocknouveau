@@ -1,0 +1,41 @@
+{% extends 'base_gestionnaire.html' %}
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">Gestionnaire Dashboard</h1>
+    <p class="text-gray-600 mb-6">Welcome to your management panel. Manage inventory and view reports.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Gestionnaire Stats Cards -->
+        <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-200">
+            <h3 class="text-lg font-semibold text-indigo-900">Products Managed</h3>
+            <p class="text-2xl font-bold text-indigo-600">{{ managed_products|default:"--" }}</p>
+        </div>
+        
+        <div class="bg-teal-50 p-4 rounded-lg border border-teal-200">
+            <h3 class="text-lg font-semibold text-teal-900">Low Stock Items</h3>
+            <p class="text-2xl font-bold text-teal-600">{{ low_stock_items|default:"--" }}</p>
+        </div>
+        
+        <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+            <h3 class="text-lg font-semibold text-orange-900">Recent Updates</h3>
+            <p class="text-2xl font-bold text-orange-600">{{ recent_updates|default:"--" }}</p>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="mt-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="{% url 'inventaire:gestionnaire_products' %}" class="block p-4 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">
+                <h3 class="font-semibold text-blue-900">Manage Products</h3>
+                <p class="text-sm text-blue-700">Add, edit, or remove products from inventory</p>
+            </a>
+            
+            <a href="{% url 'inventaire:gestionnaire_reports' %}" class="block p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 transition-colors">
+                <h3 class="font-semibold text-green-900">View Reports</h3>
+                <p class="text-sm text-green-700">Generate and view inventory reports</p>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

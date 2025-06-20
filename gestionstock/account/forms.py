@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import AuthenticationForm
 
 User = get_user_model()
 
@@ -258,3 +259,44 @@ class UserPasswordChangeForm(forms.Form):
         self.user.set_password(password)
         self.user.save()
         return self.user
+
+# This code is part of a Django application for user management, including custom forms for user creation, editing, and authentication.
+class EmailAuthenticationForm(AuthenticationForm):
+    """Custom authentication form that uses email instead of username"""
+    username = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out',
+            'placeholder': 'Enter your email'
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out',
+            'placeholder': 'Enter your password'
+        })
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].label = 'Email Address'
+
+class CustomUserCreationForm(UserCreationForm):
+    """Custom user creation form for email-based registration"""
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out',
+            'placeholder': 'Enter your email'
+        })
+    )
+
+    class Meta:
+        model = User
+        fields = ("email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user

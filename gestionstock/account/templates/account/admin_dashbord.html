@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">Administrator Dashboard</h1>
+    <p class="text-gray-600 mb-6">Welcome to the admin panel. You have full access to all system features.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Admin Stats Cards -->
+        <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <h3 class="text-lg font-semibold text-blue-900">Total Users</h3>
+            <p class="text-2xl font-bold text-blue-600">{{ total_users|default:"--" }}</p>
+        </div>
+        
+        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+            <h3 class="text-lg font-semibold text-green-900">Total Products</h3>
+            <p class="text-2xl font-bold text-green-600">{{ total_products|default:"--" }}</p>
+        </div>
+        
+        <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+            <h3 class="text-lg font-semibold text-yellow-900">Total Enterprises</h3>
+            <p class="text-2xl font-bold text-yellow-600">{{ total_enterprises|default:"--" }}</p>
+        </div>
+        
+        <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <h3 class="text-lg font-semibold text-purple-900">System Health</h3>
+            <p class="text-2xl font-bold text-purple-600">Good</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
