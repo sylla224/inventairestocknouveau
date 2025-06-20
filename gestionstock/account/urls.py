@@ -13,7 +13,7 @@ urlpatterns = [
     path('users/<int:pk>/delete/', delete_user, name='delete_user'),
      # Authentication URLs - using custom login view
     path('login/', CustomLoginView.as_view(), name='login'),
-    path('logout/', CustomLoginView.as_view(), name='logout'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('admin/dashboard/', admin_dashboard, name='admin_dashboard'),
     path('gestionnaire/dashboard/', gestionnaire_dashboard, name='gestionnaire_dashboard'),

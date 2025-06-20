@@ -171,11 +171,7 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     """Custom logout view"""
     next_page = reverse_lazy('account:login')
-    print("je suis dans la vue de déconnexion")
-
-    def dispatch(self, request, *args, **kwargs):
-        messages.success(request, 'You have been logged out successfully.')
-        return super().dispatch(request, *args, **kwargs)
+    
     
 def home(request):
     """Home page view"""
