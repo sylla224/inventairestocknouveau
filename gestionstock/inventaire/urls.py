@@ -9,7 +9,7 @@ app_name = "inventaire"
 urlpatterns = [
     path('', index, name='inventaire_index'),
     path('dashboard', index, name='dashboard'),
-    path('products', index, name='products'),
+    #path('products', index, name='products'),
     path('categories', index, name='categories'),
     path('products/create', CreateProductView.as_view(), name='create_product'),
     path('products/', ListProductView.as_view(), name='products'),
@@ -23,5 +23,7 @@ urlpatterns = [
     path('typeenterprise/manage/', typeenterprise_list_create, name='typeenterprise_list_create'),
     path('entreprise/<int:pk>/edit/', EditEnterpriseView.as_view(), name='edit_entreprise'),
     path('entreprise/<int:pk>/detail/', EnterpriseDetailView.as_view(), name='entreprise_detail'),
+    # path for gestionnaire group users
+    path("products/gestionnaire/", ListProductView.as_view(), name='gestionnaire_products'),
 
 ]

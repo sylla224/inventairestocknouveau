@@ -5,7 +5,7 @@ from account.forms import UserCreationForm, UserSearchForm, UserEditForm, UserPa
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from .models import CustomUser
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView
@@ -177,8 +177,9 @@ class CustomLoginView(LoginView):
 
 # Custom logout view and closing the session
 class CustomLogoutView(LogoutView):
-    """Custom logout view"""
-    next_page = reverse_lazy('account:login')
+    def get(self, request):
+        logout(request)
+        return redirect('login')
     
     
 def home(request):
@@ -252,6 +253,6 @@ def gestionnaire_dashboard(request):
         'user_role': 'gestionnaire',
         'dashboard_title': 'Gestionnaire Dashboard'
     }
-    return render(request, 'account/gestionnaire_dashboard.html', context)
+    return render(request, 'account/gestionnaire_dashbord.html', context)
 
 

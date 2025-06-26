@@ -22,7 +22,7 @@
     <nav class="flex-1 overflow-y-auto py-4">
         <ul class="space-y-1 px-3">
             <li>
-                <a href="{% url 'inventaire:gestionnaire_dashboard' %}"
+                <a href="{% url 'account:gestionnaire_dashboard' %}"
                    class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if request.path == '/gestionnaire/dashboard/' %}bg-gray-100 font-medium{% endif %}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
                          viewBox="0 0 20 20" fill="currentColor">
@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'inventaire:gestionnaire_products' %}"
+                <a href="{% url 'inventaire:products' %}"
                    class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'products' in request.path %}bg-gray-100 font-medium{% endif %}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
                          viewBox="0 0 20 20" fill="currentColor">
@@ -44,7 +44,7 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'inventaire:gestionnaire_inventory' %}"
+                <a href="#"
                    class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'inventory' in request.path %}bg-gray-100 font-medium{% endif %}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
                          viewBox="0 0 20 20" fill="currentColor">
@@ -54,7 +54,7 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'inventaire:gestionnaire_reports' %}"
+                <a href="#"
                    class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'reports' in request.path %}bg-gray-100 font-medium{% endif %}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
                          viewBox="0 0 20 20" fill="currentColor">
@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'inventaire:gestionnaire_profile' %}"
+                <a href="#"
                    class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group {% if 'profile' in request.path %}bg-gray-100 font-medium{% endif %}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700"
                          viewBox="0 0 20 20" fill="currentColor">
@@ -142,7 +142,7 @@
                         <!-- User dropdown menu -->
                         <div class="user-menu hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                              role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                            <a href="{% url 'inventaire:gestionnaire_profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your Profile</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
                             <a href="{% url 'account:login' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
                         </div>
@@ -173,7 +173,7 @@
                 </div>
                 <nav class="mt-5 px-2 space-y-1">
                     <!-- Mobile navigation items -->
-                    <a href="{% url 'inventaire:gestionnaire_dashboard' %}"
+                    <a href="{% url 'account:gestionnaire_dashboard' %}"
                        class="flex items-center px-3 py-2 text-gray-700 rounded-md hover:bg-gray-100 group">
                         <svg xmlns="http://www.w3.org/2000/svg"
                              class="h-5 w-5 mr-2 text-gray-500 group-hover:text-gray-700" viewBox="0 0 20 20"
