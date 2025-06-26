@@ -68,7 +68,7 @@
                 {% endif %}
 
                 <!-- Login Form -->
-                <form class="mt-8 space-y-6" method="post" action="{% url 'account:home' %}">
+                <form class="mt-8 space-y-6" method="post" action="{% url 'account:login' %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="/account/">
                     <div class="space-y-4">

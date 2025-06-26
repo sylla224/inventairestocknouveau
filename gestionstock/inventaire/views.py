@@ -27,18 +27,62 @@ def CreateProduct(request):
 class CreateProductView(CreateView):
     model = Product
     form_class = ProductForm
-    success_url = reverse_lazy('inventaire:products')
+    #success_url = reverse_lazy('inventaire:products')
     template_name = 'inventaire/create_product.html'
     pagination_by = 20
+
+    def get_template_names(self):
+        user = self.request.user
+        if user.is_authenticated and user.groups.filter(name='gestionnaire').exists():
+            return ['inventaire/create_product_gestionnaire.html']
+        elif user.is_authenticated and user.groups.filter(name='admin').exists():
+            return ['inventaire/list_product.html']
+        else:
+            messages.error(self.request, 'You do not have permission to view this page.')
+            return ['inventaire/index.html']
+      
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.is_authenticated and user.groups.filter(name='gestionnaire').exists():
+            messages.success(self.request, 'Product created successfully!')
+            return reverse_lazy('inventaire:products')
+        elif user.is_authenticated and user.groups.filter(name='admin').exists():
+            messages.success(self.request, 'Product created successfully!')
+            return reverse_lazy('inventaire:products')
+        else:            messages.error(self.request, 'You do not have permission to create a product.')
+        return super().get_success_url()
+        
+
+
 
 
 class ListProductView(ListView):
     model = Product
-    template_name = 'inventaire/list_product.html'
+    #template_name = 'inventaire/list_product.html'
     context_object_name = 'products'
 
     def get_queryset(self):
         return Product.objects.all()
+    def get_template_names(self):
+        user = self.request.user
+        if user.is_authenticated and user.groups.filter(name='gestionnaire').exists():
+            return ['inventaire/list_product_gestionnaire.html']
+        elif user.is_authenticated and user.groups.filter(name='admin').exists():
+            return ['inventaire/list_product.html']
+        else:
+            messages.error(self.request, 'You do not have permission to view this page.')
+            return ['inventaire/index.html']
+    def get_success_url(self):
+        user = self.request.user
+        if user.is_authenticated and user.groups.filter(name='gestionnaire').exists():
+            messages.success(self.request, 'Product created successfully!')
+            return reverse_lazy('inventaire:gestionnaire_products')
+        elif user.is_authenticated and user.groups.filter(name='admin').exists():
+            messages.success(self.request, 'Product created successfully!')
+            return reverse_lazy('inventaire:products')
+        else:            messages.error(self.request, 'You do not have permission to create a product.')
+        return super().get_success_url()
 
 
 class EditProductview(UpdateView):
